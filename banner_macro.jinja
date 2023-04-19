@@ -1,0 +1,6 @@
+{% macro banner() %}
+{{ salt['slsutil.banner'](title='THIS FILE IS MANAGED BY SALT - DO NOT EDIT',
+                         commentchar='#',
+                         borderchar='#',
+                         text='The contents of this file are managed by Salt. Any changes to this file may be overwritten automatically and without warning.') }}
+{% endmacro %}

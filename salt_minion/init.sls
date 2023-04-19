@@ -12,12 +12,13 @@ minion|service:
 {% set destination_dir = '/etc/salt/minion.d/' %}
 
 {% for file in salt['cp.list_master'](prefix=files_dir) %}
-  {% set filename = file.split('/')[-1] %}
+{% set filename = file.split('/')[-1] %}
   {% if not filename.startswith('.') %}
 minion|manage_{{ filename }}:
   file.managed:
     - name: {{ destination_dir }}{{ filename }}
     - source: salt://{{ file }}
+    - template: jinja
     - user: root
     - group: users
     - mode: 744

@@ -1,3 +1,5 @@
+{% from 'banner_macro.jinja' import banner %}
+
 master|pkg:
   pkg.installed:
     - pkgs:
@@ -40,6 +42,9 @@ master|manage_{{ filename }}:
   file.managed:
     - name: {{ destination_dir }}{{ filename }}
     - source: salt://{{ file }}
+    - template: jinja
+    - defaults:
+        banner: {{ banner() }}
     - user: root
     - group: users
     - mode: 744

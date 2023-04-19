@@ -36,7 +36,7 @@ master|dotd|config:
 {% for file in salt['cp.list_master'](prefix=files_dir) %}
   {% set filename = file.split('/')[-1] %}
   {% if not filename.startswith('.') %}
-manage_{{ filename }}:
+master|manage_{{ filename }}:
   file.managed:
     - name: {{ destination_dir }}{{ filename }}
     - source: salt://{{ file }}

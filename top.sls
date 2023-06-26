@@ -5,3 +5,11 @@ base:
 
   'salt-master*':
     - salt_master
+
+  'dedfour.dedfour.com':
+    - znc
+    - irc
+
+  'bots.dedfour.com':
+{#    - littlelight #}
+    - snorlax

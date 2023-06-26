@@ -2,11 +2,21 @@ minion|pkgs:
   pkg.installed:
     - pkgs:
       - salt-minion
+      - supervisor
 
 minion|service:
   service.running:
     - name: salt-minion
     - enable: True
+    - require:
+      - pkg: minion|pkgs
+
+minion|supervisord|service:
+  service.running:
+    - name: supervisor
+    - enable: True
+    - require:
+      - pkg: minion|pkgs
 
 {% set files_dir = 'salt_minion/files' %}
 {% set destination_dir = '/etc/salt/minion.d/' %}

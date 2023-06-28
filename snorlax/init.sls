@@ -24,7 +24,7 @@ snorlax|user:
     - require:
       - group: snorlax|group
 
-{% set snorlax_git_ssh_priv_key- =  pillar['snorlax_git_ssh_priv_key'] %}
+{% set snorlax_git_ssh_priv_key = pillar['snorlax_git_ssh_priv_key'] %}
 {% set snorlax_repo_url = pillar['snorlax_repo_url'] %}
 
 snorlax|ssh_key|directory:

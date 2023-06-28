@@ -3,16 +3,16 @@
 
 snorlax|ssh_key|directory:
   file.directory:
-    - name: /home/cappy/.ssh
-    - user: cappy
-    - group: cappy
+    - name: /home/snorlax/.ssh
+    - user: snorlax
+    - group: snorlax
     - mode: 700
 
 snorlax|ssh|private_key:
   file.managed:
-    - name: /home/cappy/.ssh/id_rsa
-    - user: cappy
-    - group: cappy
+    - name: /home/snorlax/.ssh/id_rsa
+    - user: snorlax
+    - group: snorlax
     - mode: 600
     - contents_pillar: github_ssh_private_key
 

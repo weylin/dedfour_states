@@ -1,6 +1,5 @@
 include:
-  - pkgs
-  - keys
-  - repository
-  - services
-  - users
+  - .pkgs
+  - .repository
+  - .services
+  - .users

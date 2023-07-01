@@ -18,4 +18,3 @@ snorlax|bot|service:
     - enable: True
     - require:
       - file: snorlax|bot|service
-      - git: snorlax|git|repo

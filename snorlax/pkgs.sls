@@ -2,6 +2,7 @@ snorlax|install|pkgs:
   pkg.installed:
     - name:
       - git
+      - python3-pip
 
 snorlax|install|python310:
   pkg.installed:

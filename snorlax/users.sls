@@ -28,10 +28,21 @@ snorlax|ssh_key|directory:
 
 snorlax|ssh|private_key:
   file.managed:
-    - name: /home/snorlax/.ssh/id_rsa
+    - name: /home/snorlax/.ssh/id_ed25519_snorlax
     - user: snorlax
     - group: snorlax
     - mode: 600
     - contents_pillar: snorlax_ssh_private_key
+    - require:
+      - snorlax|ssh_key|directory
+
+snorlax|ssh|public_key:
+  file.managed:
+    - name: /home/snorlax/.ssh/authorized_keys
+    - user: snorlax
+    - group: snorlax
+    - mode: 600
+    - contents: |
+        ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIuOvLam8EFhQFzWq37GTPQ/96X3Ud4QJtklhPiAC7h/ snorlax@bots.dedfour.com
     - require:
       - snorlax|ssh_key|directory

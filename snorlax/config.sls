@@ -1,7 +1,8 @@
 {% set token = salt.pillar.get("snorlax_token", "") %}
 
 snorlax|setenv|api_key:
-   environ.setenv:
-     - name: discordApiKey
-     - value: {{ token }}
-     - update_minion: True
+  cmd.run:
+    - name: "export discordApiKey={{ token }}"
+    - runas: snorlax
+    - require:
+      - user: snorlax

@@ -1,3 +1,5 @@
+{% set token = salt.pillar.get("snorlax_token", "") %}
+
 snorlax|bot|service:
   file.managed:
     - name: /etc/systemd/system/snorlax.service
@@ -7,8 +9,9 @@ snorlax|bot|service:
 
         [Service]
         User=snorlax
-        WorkingDirectory=/home/snorlax/git
-        ExecStart=/usr/bin/python3 /home/snorlax/git/Snorlax/snorlax.py
+        WorkingDirectory=/home/snorlax/bot
+        ExecStart=/usr/bin/python3 /home/snorlax/bot/main.py
+        discordApiKey={{ token }}
         Restart=always
 
         [Install]

@@ -1,5 +1,5 @@
 include:
-  - .pkgs
+{#  - .pkgs #}
   - .services
   - .users
   - .config

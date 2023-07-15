@@ -1,5 +1,3 @@
-{% set snorlax_git_ssh_priv_key = pillar['snorlax_git_ssh_priv_key'] %}
-
 snorlax|group:
   group.present:
     - name: snorlax
@@ -33,6 +31,7 @@ snorlax|ssh|private_key:
     - group: snorlax
     - mode: 600
     - contents_pillar: snorlax_ssh_private_key
+    - gpg_decrypted: True
     - require:
       - snorlax|ssh_key|directory
 

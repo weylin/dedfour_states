@@ -1,4 +1,4 @@
-{% set munchlax_git_ssh_priv_key = pillar['munchlax_git_ssh_priv_key'] %}
+{% from 'banner_macro.jinja' import banner %}
 
 munchlax|group:
   group.present:
@@ -32,7 +32,10 @@ munchlax|ssh|private_key:
     - user: munchlax
     - group: munchlax
     - mode: 600
+    - defaults:
+        banner: {{ banner() }}
     - contents_pillar: munchlax_ssh_private_key
+    - gpg_decrypted: True
     - require:
       - munchlax|ssh_key|directory
 
@@ -42,6 +45,8 @@ munchlax|ssh|public_key:
     - user: munchlax
     - group: munchlax
     - mode: 600
+    - defaults:
+        banner: {{ banner() }}
     - contents: |
         ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIuOvLam8EFhQFzWq37GTPQ/96X3Ud4QJtklhPiAC7h/ munchlax@bots.dedfour.com
     - require:

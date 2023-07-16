@@ -1,3 +1,5 @@
+{% from 'banner_macro.jinja' import banner %}
+
 snorlax|group:
   group.present:
     - name: snorlax
@@ -30,6 +32,8 @@ snorlax|ssh|private_key:
     - user: snorlax
     - group: snorlax
     - mode: 600
+    - defaults:
+        banner: {{ banner() }}
     - contents_pillar: snorlax_ssh_private_key
     - gpg_decrypted: True
     - require:
@@ -41,6 +45,8 @@ snorlax|ssh|public_key:
     - user: snorlax
     - group: snorlax
     - mode: 600
+    - defaults:
+        banner: {{ banner() }}
     - contents: |
         ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIuOvLam8EFhQFzWq37GTPQ/96X3Ud4QJtklhPiAC7h/ snorlax@bots.dedfour.com
     - require:

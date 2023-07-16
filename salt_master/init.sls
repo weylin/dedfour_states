@@ -50,4 +50,3 @@ master|manage_{{ filename }}:
     - mode: 744
   {% endif %}
 {% endfor %}
-

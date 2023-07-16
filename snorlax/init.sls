@@ -1,4 +1,3 @@
 include:
-{#  - .pkgs #}
   - .services
   - .users

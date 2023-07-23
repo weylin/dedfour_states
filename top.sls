@@ -13,4 +13,4 @@ base:
   'bots.dedfour.com':
 {#    - littlelight #}
     - snorlax
-{#    - munchlax #}
+    - munchlax

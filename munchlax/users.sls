@@ -48,6 +48,6 @@ munchlax|ssh|public_key:
     - defaults:
         banner: {{ banner() }}
     - contents: |
-        ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIuOvLam8EFhQFzWq37GTPQ/96X3Ud4QJtklhPiAC7h/ munchlax@bots.dedfour.com
+        ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB25ClVHfAeaDeUZ0pBh7sbN0hul1LtLrU5UOsqjZq3+ munchlax@bots.dedfour.com
     - require:
       - munchlax|ssh_key|directory

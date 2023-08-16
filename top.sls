@@ -11,6 +11,6 @@ base:
     - irc
 
   'bots.dedfour.com':
-{#    - littlelight #}
+    - littlelight
     - snorlax
     - munchlax

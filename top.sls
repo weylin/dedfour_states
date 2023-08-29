@@ -14,3 +14,4 @@ base:
     - littlelight
     - snorlax
     - munchlax
+    - bridge

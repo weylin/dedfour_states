@@ -1,0 +1,51 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+#name_suffix = '.saltdev.dedfour.com'
+Vagrant.require_version ">= 2.3.7"
+
+$script = <<-SCRIPT
+echo I am provisioning...
+date > /etc/vagrant_provisioned_at
+wget -O bootstrap-salt.sh https://bootstrap.saltproject.io
+sudo sh bootstrap-salt.sh
+SCRIPT
+
+Vagrant.configure("2") do |config|
+  config.vm.synced_folder ".", "/srv/salt/"
+
+  config.vm.define "saltmaster" do |saltmaster|
+    saltmaster.vm.box = "ubuntu/focal64"
+    saltmaster.vm.hostname = "salt-master.dev.dedfour.com"
+    saltmaster.vm.provision :master do |master|
+      saltmaster.master_config = "salt/minion"
+#    master.vm.install_master = true
+#    master.vm.minion_id = "-master.dev.dedfour.com"
+    end
+
+  end
+end
+
+#  config.vm.box = "ubuntu/focal64"
+#  ## For masterless, mount your salt file root
+#  config.vm.synced_folder ".", "/srv/salt/"
+#
+#  #config.vm.provision :salt do |salt| "shell" inline: $script
+#  config.vm.provision :salt do |salt|
+#      salt.masterless = false
+#      salt.master_config = "salt_master"
+#      salt.minion_config = "salt_minion"
+#      salt.run_highstate = true
+#  end
+#  ## Use all the defaults:
+#  config.vm.provision :salt do |salt|
+#    salt.masterless = true
+#    salt.minion_config = "salt/minion"
+#    salt.run_highstate = true
+
+#  config.vm.define "master", primary: true do |master|
+#    master.vm.box = "salt_master"
+#  end
+#
+#  config.vm.define "bot" do |master|
+#   master.vm.box = "bot"

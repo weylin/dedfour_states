@@ -11,7 +11,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.define :master, primary: true do |master_config|
     master_config.vm.provider "virtualbox" do |vb|
-      vb.memory = "2048"
+      vb.memory = "1024"
       vb.cpus = 1
       vb.name = "master"
     end
@@ -24,9 +24,12 @@ Vagrant.configure("2") do |config|
 
     master_config.vm.provision :salt do |salt|
       salt.install_master = true
-      salt.master_key = "./keys/master_minion.pem"
-      salt.master_pub= "./keys/master_minion.pub"
+      salt.run_highstate = true
+      salt.seed_master = {
+        "bots" => "keys/bots.pem"
+      }
       salt.master_config = "salt_master/files/vagrant_master.conf"
+      salt.grains_config = "salt_master/files/roles"
       salt.minion_config = "salt_minion/files/vagrant_minion.conf"
     end
   end
@@ -34,7 +37,7 @@ Vagrant.configure("2") do |config|
   config.vm.define :bots do |bots_config|
     bots_config.vm.provider "virtualbox" do |vb|
       vb.memory = 1024
-      vb.cpus = 2
+      vb.cpus = 1
       vb.name = "bots"
     end
 
@@ -46,6 +49,10 @@ Vagrant.configure("2") do |config|
 
     bots_config.vm.provision :salt do |salt|
       salt.minion_config = "salt_minion/files/vagrant_minion.conf"
+      salt.grains_config = "salt_minion/files/roles"
+      salt.minion_key = "keys/bots.pem"
+      salt.minion_pub = "keys/bots.pub"
+      salt.run_highstate = true
     end
   end
 end

@@ -26,7 +26,7 @@ Vagrant.configure("2") do |config|
       salt.install_master = true
       salt.run_highstate = true
       salt.seed_master = {
-        "bots" => "keys/bots.pem"
+        "bots" => "keys/bots.pub"
       }
       salt.master_config = "salt_master/files/vagrant_master.conf"
       salt.grains_config = "salt_master/files/roles"

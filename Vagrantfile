@@ -29,7 +29,7 @@ Vagrant.configure("2") do |config|
         "bots" => "keys/bots.pub"
       }
       salt.master_config = "salt_master/files/vagrant_master.conf"
-      salt.grains_config = "salt_master/files/roles"
+      salt.grains_config = "salt_master/files/vagrant_roles"
       salt.minion_config = "salt_minion/files/vagrant_minion.conf"
     end
   end
@@ -49,7 +49,7 @@ Vagrant.configure("2") do |config|
 
     bots_config.vm.provision :salt do |salt|
       salt.minion_config = "salt_minion/files/vagrant_minion.conf"
-      salt.grains_config = "salt_minion/files/roles"
+      salt.grains_config = "salt_minion/files/vagrant_roles"
       salt.minion_key = "keys/bots.pem"
       salt.minion_pub = "keys/bots.pub"
       salt.run_highstate = true

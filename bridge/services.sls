@@ -23,6 +23,7 @@ bridge|bot|service:
         WorkingDirectory=/home/bridge/bot
         ExecStart=/usr/local/bin/discord-irc --config /home/bridge/bot/config.json
         Restart=always
+        RuntimeMaxSec=86400
 
         [Install]
         WantedBy=multi-user.target

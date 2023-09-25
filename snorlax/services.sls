@@ -1,4 +1,5 @@
-{% set token = salt.pillar.get("snorlax_token", "") %}
+{% set minion_role = salt['grains.get']('roles', ['default'])[0] %}
+{% set token = salt.pillar.get("snorlax_token", "") if minion_role != "vagrant" else "your_manual_token_here" %}
 
 snorlax|bot|service:
   file.managed:

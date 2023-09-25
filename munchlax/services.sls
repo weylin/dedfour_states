@@ -1,4 +1,5 @@
-{% set token = salt.pillar.get("munchlax_token", "") %}
+{% set minion_role = salt['grains.get']('roles', ['default'])[0] %}
+{% set token = salt.pillar.get("munchlax_token", "") if minion_role != "vagrant" else "your_manual_token_here" %}
 
 munchlax|bot|service:
   file.managed:
@@ -16,6 +17,7 @@ munchlax|bot|service:
 
         [Install]
         WantedBy=multi-user.target
+
 munchlax|bot|service_running:
   service.running:
     - name: munchlax

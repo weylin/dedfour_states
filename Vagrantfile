@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-pillar = 'dedfour_salt_pillar'
+pillar = 'dedfour_pillar'
 
 Vagrant.require_version ">= 2.3.7"
 

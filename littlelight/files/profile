@@ -1,0 +1,13 @@
+cat <<EOM
+###########################################################
+# This user is managed by salt with the following caveats #
+#                                                         #
+# The ./CloutBot dir is pushed up from github workflows:  #
+# https://github.com/weylin/CloudBot                      #
+#                                                         #
+# Any ancillary files, like \`destiny_cache\`, for          #
+# commands (Ie., any not included in the base CloudBot    #
+# repo) are not managed by salt, except the primary       #
+# \`config.json\` file.                                     #
+###########################################################
+EOM

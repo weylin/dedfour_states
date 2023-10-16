@@ -51,3 +51,10 @@ littlelight|ssh|public_key:
         ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPhNP1Xa7gLmECiMslc9UCF4Xc0OBDNY+IEgorPF1eUd littlelight@bots.dedfour.com
     - require:
       - littlelight|ssh_key|directory
+
+littlelight|profile|message:
+  file.append:
+    - name: /home/littlelight/.profile
+    - source: salt://littlelight/files/profile
+    - require:
+      - littlelight|user

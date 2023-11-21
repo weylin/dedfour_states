@@ -27,3 +27,40 @@ snorlax|bot|service_running:
     - enable: True
     - require:
       - file: snorlax|bot|service
+
+snorlax|bot|service_running:
+  service.running:
+    - name: snorlax
+    - enable: True
+    - require:
+      - file: snorlax|bot|service
+
+snorlax|bot|service_restarter:
+  file.managed:
+    - name: /etc/systemd/system/snorlax-restart.service
+    - contents: |
+        [Unit]
+        Description=Munchlax auto-restart service.
+        After=network.target
+        [Service]
+        Type=oneshot
+        ExecStart=/usr/bin/systemctl restart snorlax.service
+        [Install]
+        WantedBy=multi-user.target
+
+snorlax|bot|service_watcher:
+  file.managed:
+    - name: /etc/systemd/system/snorlax-restart.path
+    - contents: |
+        [Path]
+        PathModified=/home/snorlax/bot/cogs/
+        PathModified=/home/snorlax/bot/main.py
+
+        [Install]
+        WantedBy=multi-user.target
+snorlax|bot|service_watcher_running:
+  service.running:
+    - name: snorlax-restart.path
+    - enable: True
+    - require:
+      - file: snorlax|bot|service_watcher

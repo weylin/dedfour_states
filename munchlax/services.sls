@@ -26,3 +26,33 @@ munchlax|bot|service_running:
     - enable: True
     - require:
       - file: munchlax|bot|service
+
+munchlax|bot|service_restarter:
+  file.managed:
+    - name: /etc/systemd/system/munchlax-restart.service
+    - contents: |
+        [Unit]
+        Description=Munchlax auto-restart service.
+        After=network.target
+        [Service]
+        Type=oneshot
+        ExecStart=/usr/bin/systemctl restart munchlax.service
+        [Install]
+        WantedBy=multi-user.target
+
+munchlax|bot|service_watcher:
+  file.managed:
+    - name: /etc/systemd/system/munchlax-restart.path
+    - contents: |
+        [Path]
+        PathModified=/home/munchlax/bot/cogs/
+        PathModified=/home/munchlax/bot/main.py
+
+        [Install]
+        WantedBy=multi-user.target
+munchlax|bot|service_watcher_running:
+  service.running:
+    - name: munchlax-restart.path
+    - enable: True
+    - require:
+      - file: munchlax|bot|service_watcher

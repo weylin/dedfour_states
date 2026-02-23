@@ -17,6 +17,5 @@ base:
 
   'bots*':
     - littlelight
-    - snorlax
     - munchlax
     - bridge

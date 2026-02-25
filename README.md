@@ -44,7 +44,7 @@ After setup completes, you can verify:
 # Check master status
 docker exec salt-master salt '*' test.ping
 
-# Check minion status  
+# Check minion status
 docker exec salt-minion-bots salt-call test.ping
 ```
 

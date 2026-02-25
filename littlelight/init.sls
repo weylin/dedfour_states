@@ -1,4 +1,5 @@
 include:
   - .users
   - .systemd
-  - cloudbot_process
+  - .requirements
+  - .cloudbot_process

@@ -5,7 +5,7 @@ littlelight|systemd|service:
         [Unit]
         Description=LittleLight IRC Bot
         After=network.target
-        
+
         [Service]
         Type=simple
         User=littlelight
@@ -14,7 +14,7 @@ littlelight|systemd|service:
         ExecStart=/usr/bin/python3 /home/littlelight/CloudBot/start.py
         Restart=always
         RestartSec=10
-        
+
         [Install]
         WantedBy=multi-user.target
     - require:

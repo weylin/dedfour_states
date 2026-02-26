@@ -1,4 +1,0 @@
-grains:
-  roles:
-    - master
-    - vagrant

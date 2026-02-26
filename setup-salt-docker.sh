@@ -53,14 +53,43 @@ sleep 5
 docker exec salt-master bash -c "mkdir -p /etc/salt/pki/master /etc/salt/pki/minion /etc/salt/master.d /etc/salt/minion.d"
 docker exec salt-master cp /srv/salt/keys/master_minion.pem /etc/salt/pki/master/minion.pem
 docker exec salt-master cp /srv/salt/keys/master_minion.pub /etc/salt/pki/master/minion.pub
-docker exec salt-master cp /srv/salt/vagrant/files/vagrant_master.conf /etc/salt/master.d/master.conf
-docker exec salt-master cp /srv/salt/vagrant/files/vagrant_master_roles /etc/salt/grains
+
+# Create master configuration
+docker exec salt-master bash -c "cat > /etc/salt/master.d/master.conf <<EOF
+auto_accept: True
+interface: 0.0.0.0
+publish_port: 4505
+ret_port: 4506
+user: root
+file_root: /srv/salt
+pillar_root: /srv/pillar
+log_level: debug
+log_file: /var/log/salt/master
+key_logfile: /var/log/salt/key
+
+### Grains configuration puts it here.
+include:
+  - /etc/salt/grains
+EOF"
+
+# Create master grains
+docker exec salt-master bash -c "cat > /etc/salt/grains <<EOF
+roles:
+  - master
+  - vagrant
+EOF"
 
 # Configure Salt minion
 docker exec salt-minion-bots bash -c "mkdir -p /etc/salt/pki/minion /etc/salt/minion.d"
 docker exec salt-minion-bots cp /srv/salt/keys/bots.pem /etc/salt/pki/minion/minion.pem
 docker exec salt-minion-bots cp /srv/salt/keys/bots.pub /etc/salt/pki/minion/minion.pub
-docker exec salt-minion-bots cp /srv/salt/vagrant/files/vagrant_bots_roles /etc/salt/grains
+
+# Create minion grains
+docker exec salt-minion-bots bash -c "cat > /etc/salt/grains <<EOF
+roles:
+  - bots
+  - vagrant
+EOF"
 
 # Get master IP
 MASTER_IP=$(docker inspect salt-master --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}')

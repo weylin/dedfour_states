@@ -1,3 +1,5 @@
 include:
-{#  - .services #}
   - .users
+  - .systemd
+  - .requirements
+  - .cloudbot_process

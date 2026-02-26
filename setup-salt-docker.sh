@@ -54,6 +54,9 @@ docker exec salt-master bash -c "mkdir -p /etc/salt/pki/master /etc/salt/pki/min
 docker exec salt-master cp /srv/salt/keys/master_minion.pem /etc/salt/pki/master/minion.pem
 docker exec salt-master cp /srv/salt/keys/master_minion.pub /etc/salt/pki/master/minion.pub
 
+# Set master minion ID
+docker exec salt-master bash -c "echo 'salt-master' > /etc/salt/minion_id"
+
 # Create master configuration
 docker exec salt-master bash -c "cat > /etc/salt/master.d/master.conf <<EOF
 auto_accept: True
@@ -83,6 +86,9 @@ EOF"
 docker exec salt-minion-bots bash -c "mkdir -p /etc/salt/pki/minion /etc/salt/minion.d"
 docker exec salt-minion-bots cp /srv/salt/keys/bots.pem /etc/salt/pki/minion/minion.pem
 docker exec salt-minion-bots cp /srv/salt/keys/bots.pub /etc/salt/pki/minion/minion.pub
+
+# Set bots minion ID
+docker exec salt-minion-bots bash -c "echo 'bots' > /etc/salt/minion_id"
 
 # Create minion grains
 docker exec salt-minion-bots bash -c "cat > /etc/salt/grains <<EOF

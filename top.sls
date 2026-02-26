@@ -2,11 +2,6 @@ base:
   '*':
     - salt_minion
     - users
-{% if grains['roles'] %}
-    - match: grain
-    - vagrant:
-      - vagrant
-{% endif %}
 
   'salt-master*':
     - salt_master
@@ -19,3 +14,7 @@ base:
     - littlelight
     - munchlax
     - bridge
+
+  'grain@roles:vagrant':
+    - match: grain
+    - vagrant

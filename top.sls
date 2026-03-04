@@ -15,6 +15,6 @@ base:
     - munchlax
     - bridge
 
-  'grain@roles:vagrant':
+  'grain@roles:docker':
     - match: grain
-    - vagrant
+    - docker

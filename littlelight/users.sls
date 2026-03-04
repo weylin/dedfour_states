@@ -18,7 +18,7 @@ littlelight|user:
       - group: littlelight|group
 
 # SSH configuration (production only)
-{% if 'vagrant' not in grains.get('roles', []) %}
+{% if 'docker' not in grains.get('roles', []) %}
 littlelight|ssh_key|directory:
   file.directory:
     - name: /home/littlelight/.ssh

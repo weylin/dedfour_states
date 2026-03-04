@@ -7,8 +7,12 @@ echo "Building Salt Docker images..."
 
 # Build master image
 docker build -t salt-master-image -f - . <<EOF
-FROM ubuntu:22.04
-RUN apt-get update && apt-get install -y salt-master salt-minion openssh-server
+FROM ubuntu:24.04
+RUN apt-get update && apt-get install -y curl gnupg
+RUN mkdir -m 755 -p /etc/apt/keyrings
+RUN curl -fsSL https://packages.broadcom.com/artifactory/api/security/keypair/SaltProjectKey/public | gpg --dearmor | tee /etc/apt/keyrings/salt-archive-keyring.pgp > /dev/null
+RUN curl -fsSL https://github.com/saltstack/salt-install-guide/releases/latest/download/salt.sources | tee /etc/apt/sources.list.d/salt.sources
+RUN apt-get update && apt-get install -y salt-master salt-minion openssh-server nodejs
 RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
 RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
 EXPOSE 22 4505 4506
@@ -17,8 +21,12 @@ EOF
 
 # Build minion image  
 docker build -t salt-minion-image -f - . <<EOF
-FROM ubuntu:22.04
-RUN apt-get update && apt-get install -y salt-minion openssh-server
+FROM ubuntu:24.04
+RUN apt-get update && apt-get install -y curl gnupg
+RUN mkdir -m 755 -p /etc/apt/keyrings
+RUN curl -fsSL https://packages.broadcom.com/artifactory/api/security/keypair/SaltProjectKey/public | gpg --dearmor | tee /etc/apt/keyrings/salt-archive-keyring.pgp > /dev/null
+RUN curl -fsSL https://github.com/saltstack/salt-install-guide/releases/latest/download/salt.sources | tee /etc/apt/sources.list.d/salt.sources
+RUN apt-get update && apt-get install -y salt-minion openssh-server nodejs
 RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
 RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
 EXPOSE 22
@@ -79,7 +87,7 @@ EOF"
 docker exec salt-master bash -c "cat > /etc/salt/grains <<EOF
 roles:
   - master
-  - vagrant
+  - docker
 EOF"
 
 # Configure Salt minion
@@ -94,7 +102,7 @@ docker exec salt-minion-bots bash -c "echo 'bots' > /etc/salt/minion_id"
 docker exec salt-minion-bots bash -c "cat > /etc/salt/grains <<EOF
 roles:
   - bots
-  - vagrant
+  - docker
 EOF"
 
 # Get master IP
@@ -103,10 +111,13 @@ MASTER_IP=$(docker inspect salt-master --format='{{range .NetworkSettings.Networ
 # Configure minion to connect to master
 docker exec salt-minion-bots bash -c "echo 'master: $MASTER_IP' > /etc/salt/minion"
 
+# Configure master minion to connect to itself
+docker exec salt-master bash -c "echo 'master: 127.0.0.1' > /etc/salt/minion"
+
 # Start Salt services
-docker exec salt-master service salt-master start
-docker exec salt-master service salt-minion start
-docker exec salt-minion-bots service salt-minion start
+docker exec salt-master salt-master -d
+docker exec salt-master salt-minion -d
+docker exec salt-minion-bots salt-minion -d
 
 echo "Waiting for Salt services to start..."
 sleep 10

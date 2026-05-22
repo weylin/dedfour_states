@@ -13,5 +13,6 @@ littlelight|config:
     - user: littlelight
     - group: littlelight
     - contents_pillar: littlelight_config_json
+    - gpg_decrypted: True
     - require:
       - git: littlelight|repo

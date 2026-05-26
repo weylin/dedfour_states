@@ -21,7 +21,7 @@ littlelight|venv|create:
     - venv_module: venv
     - require:
       - pkg: littlelight|python|deps
-      - git: littlelight|repo
+      - file: littlelight|directory
 
 littlelight|pip|requirements:
   pip.installed:

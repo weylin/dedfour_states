@@ -1,18 +1,19 @@
-{% set git_repo = "https://github.com/weylin/CloudBot.git" %}
 {% set target_directory = "/home/littlelight/CloudBot" %}
 
-littlelight|repo:
-  git.latest:
-    - name: {{ git_repo }}
-    - target: {{ target_directory }}
+littlelight|directory:
+  file.directory:
+    - name: {{ target_directory }}
     - user: littlelight
+    - group: littlelight
+    - mode: 755
+    - makedirs: True
 
 littlelight|config:
   file.managed:
-    - name: /home/littlelight/CloudBot/config.json
+    - name: {{ target_directory }}/config.json
     - user: littlelight
     - group: littlelight
     - contents_pillar: littlelight_config_json
     - gpg_decrypted: True
     - require:
-      - git: littlelight|repo
+      - file: littlelight|directory

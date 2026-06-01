@@ -21,20 +21,11 @@ littlelight|venv|create:
     - venv_module: venv
     - require:
       - pkg: littlelight|python|deps
-      - git: littlelight|repo
+      - file: littlelight|directory
 
 littlelight|pip|requirements:
   pip.installed:
     - requirements: /home/littlelight/CloudBot/requirements.txt
-    - bin_env: /home/littlelight/CloudBot/.venv
-    - user: littlelight
-    - require:
-      - virtualenv: littlelight|venv|create
-
-# Individual pins if necessary
-littlelight|pip|sqlalchemy:
-  pip.installed:
-    - name: sqlalchemy<2.0.0
     - bin_env: /home/littlelight/CloudBot/.venv
     - user: littlelight
     - require:

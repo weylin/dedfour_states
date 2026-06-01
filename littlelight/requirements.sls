@@ -17,9 +17,10 @@ littlelight|venv|create:
   virtualenv.managed:
     - name: /home/littlelight/CloudBot/.venv
     - user: littlelight
+    - venv_module: venv
     - require:
       - pkg: littlelight|python|deps
-      - git: littlelight|repo
+      - file: littlelight|directory
 
 littlelight|pip|requirements:
   pip.installed:

@@ -8,7 +8,7 @@ littlelight|python|deps:
       - python3-venv
       - git
       - libenchant-2-2
-      - libenchant-dev
+      - libenchant-2-dev
       - libxml2-dev
       - libxslt1-dev
       - zlib1g-dev
